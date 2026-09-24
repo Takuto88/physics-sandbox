@@ -432,3 +432,25 @@ describe('determinism', () => {
     }
   })
 })
+
+// ----------------------------------------------------- render interpolation
+
+describe('render interpolation pose', () => {
+  it('keeps static bodies\' prevPos/prevAngle in sync so the renderer does not lerp them from the origin', () => {
+    const w = new World()
+    const bar = new Body(boxShape(2, 0.1))
+    bar.setKind('static')
+    bar.pos.set(0, 2.2)
+    bar.angle = 0.3
+    w.addBody(bar)
+    const ball = new Body(circleShape(0.1))
+    ball.pos.set(0, 1)
+    w.addBody(ball)
+    for (let i = 0; i < 5; i++) w.step(DT)
+    // regression: static bodies were skipped by position integration, so their
+    // prevPos stayed at the constructor's (0,0) and the canvas trembled
+    expect(bar.prevPos.x).toBeCloseTo(bar.pos.x, 9)
+    expect(bar.prevPos.y).toBeCloseTo(bar.pos.y, 9)
+    expect(bar.prevAngle).toBeCloseTo(bar.angle, 9)
+  })
+})

@@ -462,6 +462,14 @@ export class World {
   /** Position integration for all awake bodies, with CCD for small fast ones. */
   private integratePositions(bodies: Body[], dt: number): void {
     for (const b of bodies) {
+      if (b.kind === 'static') {
+        // Not integrated (no motion), but the render-interpolation pose must
+        // still track pos — otherwise the canvas lerps the box from the
+        // constructor's stale prevPos (0,0) and it trembles in place.
+        b.prevPos.copy(b.pos)
+        b.prevAngle = b.angle
+        continue
+      }
       if (!b.isDynamic() && b.kind !== 'kinematic') continue
       if (b.sleeping) continue
       b.prevPos.copy(b.pos)
