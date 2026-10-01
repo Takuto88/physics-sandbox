@@ -1,5 +1,14 @@
 # Physics Sandbox
 
+**THIS WAS A ONE SHOT** by Qwen 3.8 27B on local AI Hardware for an [Open Friday](https://www.openfriday.org)
+slot at sipgate, just to see if the local AI could solve it. It worked about 6h
+on this on two AMD Radeon AI Pro R9700 GPUs with 256k context window and compacted
+at least 3 times, probably more.
+
+The prompt can be found at [PROMPT.md](PROMPT.md) int this Repo.
+
+Description of project:
+
 A browser-based 2D physics sandbox: a hand-written, dependency-free rigid-body
 physics engine rendered in real time on Canvas2D, wrapped in a small React UI.
 You can load a dozen preset scenes, grab and throw bodies, spawn new ones, wire
